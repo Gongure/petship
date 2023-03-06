@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material';
+import { ButtonGroup, Container, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -24,7 +24,7 @@ const questions: {
   question: string;
   shortQuestion: string;
   checkValid: (value: any) => boolean;
-  type: 'text' | 'date' | 'file';
+  type: 'text' | 'date' | 'file' | 'button-group';
 }[] = [
   {
     question: 'Please upload a profile picture, {name}',
@@ -43,6 +43,12 @@ const questions: {
     shortQuestion: 'About',
     checkValid: (value: any) => typeof value === 'string' && value.length > 0,
     type: 'text',
+  },
+  {
+    question: 'Do you want to sell your pet or are you looking for one?',
+    shortQuestion: '',
+    checkValid: (value: any) => value !== null,
+    type: 'button-group',
   },
 ];
 
@@ -66,6 +72,7 @@ export default function SetupProfilePage() {
         profilePicture: await toBase64(answers[0]),
         birthday: answers[1],
         profileDescription: answers[2],
+        userType: answers[3],
       }),
     });
     navigate('/home');
@@ -149,6 +156,20 @@ export default function SetupProfilePage() {
               }}
             />
           ) : null}
+      
+          {currentQuestion.type === 'button-group' ? (
+            <Box marginBottom="1rem">
+              <ButtonGroup variant="contained">
+                <Button variant={currentAnswer == 'buy' ? 'contained' : 'outlined'} onClick={() => {
+                  setCurrentAnswer('buy');
+                }}>Buy</Button>
+                <Button variant={currentAnswer == 'sell' ? 'contained' : 'outlined'} onClick={() => {
+                  setCurrentAnswer('sell');
+                }}>Sell</Button>
+              </ButtonGroup>
+            </Box>
+          ) : null}
+      
           <Button
             type="submit"
             fullWidth

@@ -18,7 +18,7 @@ export function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/setup-profile" element={<SetupProfilePage />} />
+          <Route path="/" element={<SetupProfilePage />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>
